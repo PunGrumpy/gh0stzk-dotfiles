@@ -88,6 +88,9 @@ else
 	printf "%s%sHomebrew is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
 fi
 
+sudo apt install build-essential
+brew install gcc
+
 sleep 2
 clear
 
@@ -97,8 +100,8 @@ logo "Installing Pacman.."
 
 if ! command -v pacman >/dev/null 2>&1; then
 	printf "%s%sInstalling Pacman%s\n" "${BLD}" "${CBL}" "${CNC}"
-	wget -O /usr/local/bin/pacapt https://github.com/icy/pacapt/raw/ng/pacapt
-	chmod 755 /usr/local/bin/pacapt
+	sudo wget -O /usr/local/bin/pacapt https://github.com/icy/pacapt/raw/ng/pacapt
+	sudo chmod 755 /usr/local/bin/pacapt
 	sudo ln -sv /usr/local/bin/pacapt /usr/local/bin/pacman || true
 else
 	printf "%s%sPacman is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
