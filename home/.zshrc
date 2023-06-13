@@ -15,10 +15,6 @@ if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "$HOME/linuxbrew/.linuxbrew/bin" ] ;
-  then eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-fi
-
 #  ┬  ┌─┐┌─┐┌┬┐  ┌─┐┌┐┌┌─┐┬┌┐┌┌─┐
 #  │  │ │├─┤ ││  ├┤ ││││ ┬││││├┤ 
 #  ┴─┘└─┘┴ ┴─┴┘  └─┘┘└┘└─┘┴┘└┘└─┘

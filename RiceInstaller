@@ -74,38 +74,8 @@ else
 	exit 1
 fi
 
-sleep 2
+sleep 3
 clear
-
-########## ---------- Install Homebrew ---------- ##########
-
-logo "Installing Homebrew.."
-
-if ! command -v brew >/dev/null 2>&1; then
-	printf "%s%sInstalling Homebrew%s\n" "${BLD}" "${CBL}" "${CNC}"
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-	printf "%s%sHomebrew is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-fi
-
-sudo apt install build-essential
-brew install gcc
-
-sleep 2
-clear
-
-########## ---------- Install Pacman ---------- ##########
-
-logo "Installing Pacman.."
-
-if ! command -v pacman >/dev/null 2>&1; then
-	printf "%s%sInstalling Pacman%s\n" "${BLD}" "${CBL}" "${CNC}"
-	sudo wget -O /usr/local/bin/pacapt https://github.com/icy/pacapt/raw/ng/pacapt
-	sudo chmod 755 /usr/local/bin/pacapt
-	sudo ln -sv /usr/local/bin/pacapt /usr/local/bin/pacman || true
-else
-	printf "%s%sPacman is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
-fi
 
 ########## ---------- Install packages ---------- ##########
 
@@ -137,20 +107,6 @@ do
   fi
 done
 sleep 3
-clear
-
-########## ---------- Change window manager to BSPWM ---------- ##########
-
-logo "Changing window manager to BSPWM.."
-
-if [ ! -f ~/.xinitrc ]; then
-	printf "%s%sCreating .xinitrc%s\n" "${BLD}" "${CBL}" "${CNC}"
-	echo "exec bspwm" > ~/.xinitrc
-else
-	printf "%s%s.xinitrc already exists%s\n" "${BLD}" "${CGR}" "${CNC}"
-fi
-
-sleep 2
 clear
 
 ########## ---------- Preparing Folders ---------- ##########
