@@ -62,6 +62,35 @@ while true; do
     done
 clear
 
+########## ---------- Checking internet connection ---------- ##########
+
+logo "Checking internet connection.."
+
+if ping -q -c 1 -W 1 google.com >/dev/null; then
+	printf "%s%sInternet connection is up!%s\n" "${BLD}" "${CGR}" "${CNC}"
+else
+	printf "%s%sInternet connection is down!%s\n" "${BLD}" "${CRE}" "${CNC}"
+	printf "%s%sPlease check your internet connection and try again.%s\n" "${BLD}" "${CRE}" "${CNC}"
+	exit 1
+fi
+
+sleep 2
+clear
+
+########## ---------- Install Homebrew ---------- ##########
+
+logo "Installing Homebrew.."
+
+if ! command -v brew >/dev/null 2>&1; then
+	printf "%s%sInstalling Homebrew%s\n" "${BLD}" "${CBL}" "${CNC}"
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+	printf "%s%sHomebrew is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+fi
+
+sleep 2
+clear
+
 ########## ---------- Install packages ---------- ##########
 
 logo "Installing needed packages.."
@@ -76,7 +105,7 @@ dependencias=(base-devel rustup pacman-contrib bspwm polybar sxhkd \
 			  zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting xorg-xsetroot xorg-xwininfo xorg-xrandr)
 
 is_installed() {
-  pacman -Qi "$1" &> /dev/null
+  brew install "$1" &> /dev/null
   return $?
 }
 
@@ -92,6 +121,20 @@ do
   fi
 done
 sleep 3
+clear
+
+########## ---------- Change window manager to BSPWM ---------- ##########
+
+logo "Changing window manager to BSPWM.."
+
+if [ ! -f ~/.xinitrc ]; then
+	printf "%s%sCreating .xinitrc%s\n" "${BLD}" "${CBL}" "${CNC}"
+	echo "exec bspwm" > ~/.xinitrc
+else
+	printf "%s%s.xinitrc already exists%s\n" "${BLD}" "${CGR}" "${CNC}"
+fi
+
+sleep 2
 clear
 
 ########## ---------- Preparing Folders ---------- ##########

@@ -15,6 +15,12 @@ if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
 fi
 
+# homebrew
+if [ -d "$HOME/linuxbrew/.linuxbrew/bin" ] ;
+  then PATH="$HOME/linuxbrew/.linuxbrew/bin:$PATH"
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+fi
+
 #  ┬  ┌─┐┌─┐┌┬┐  ┌─┐┌┐┌┌─┐┬┌┐┌┌─┐
 #  │  │ │├─┤ ││  ├┤ ││││ ┬││││├┤ 
 #  ┴─┘└─┘┴ ┴─┴┘  └─┘┘└┘└─┘┴┘└┘└─┘
