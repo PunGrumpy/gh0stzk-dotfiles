@@ -83,7 +83,7 @@ logo "Installing Homebrew.."
 
 if ! command -v brew >/dev/null 2>&1; then
 	printf "%s%sInstalling Homebrew%s\n" "${BLD}" "${CBL}" "${CNC}"
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
 	printf "%s%sHomebrew is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
 fi
@@ -97,7 +97,7 @@ logo "Installing Pacman.."
 
 if ! command -v pacman >/dev/null 2>&1; then
 	printf "%s%sInstalling Pacman%s\n" "${BLD}" "${CBL}" "${CNC}"
-	curl -sL https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/pacman-package-manager/6.0.2-3/pacman-package-manager_6.0.2-3.debian.tar.xz -o /tmp/pacman-package-manager.tar.xz
+	wget https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/pacman-package-manager/6.0.2-3/pacman-package-manager_6.0.2-3.debian.tar.xz -O /tmp/pacman-package-manager.tar.xz
 	tar -xf /tmp/pacman-package-manager.tar.xz -C /tmp/ && rm /tmp/pacman-package-manager.tar.xz
 	sudo apt-get build-dep -y /tmp/pacman-package-manager/debian/control
 	cd /tmp/pacman-package-manager
