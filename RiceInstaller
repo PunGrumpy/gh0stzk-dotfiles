@@ -95,7 +95,7 @@ clear
 
 logo "Installing needed packages.."
 
-dependencias=(base-devel rustup pacman-contrib bspwm polybar sxhkd \
+dependencias=(base-devel rustup bspwm polybar sxhkd \
 			  alacritty brightnessctl dunst rofi lsd \
 			  jq polkit-gnome git playerctl mpd \
 			  ncmpcpp geany ranger mpc picom xdotool \
@@ -105,7 +105,7 @@ dependencias=(base-devel rustup pacman-contrib bspwm polybar sxhkd \
 			  zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting xorg-xsetroot xorg-xwininfo xorg-xrandr)
 
 is_installed() {
-  brew install "$1" &> /dev/null
+  brew list "$1" &> /dev/null
   return $?
 }
 
@@ -113,7 +113,7 @@ printf "%s%sChecking for required packages...%s\n" "${BLD}" "${CBL}" "${CNC}"
 for paquete in "${dependencias[@]}"
 do
   if ! is_installed "$paquete"; then
-    sudo pacman -S "$paquete" --noconfirm
+	brew install "$paquete" &> /dev/null
     printf "\n"
   else
     printf '%s%s is already installed on your system!%s\n' "${CGR}" "$paquete" "${CNC}"
