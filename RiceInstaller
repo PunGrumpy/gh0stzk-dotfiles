@@ -91,11 +91,29 @@ fi
 sleep 2
 clear
 
+########## ---------- Install Pacman ---------- ##########
+
+logo "Installing Pacman.."
+
+if ! command -v pacman >/dev/null 2>&1; then
+	printf "%s%sInstalling Pacman%s\n" "${BLD}" "${CBL}" "${CNC}"
+	curl -sL https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/pacman-package-manager/6.0.2-3/pacman-package-manager_6.0.2-3.debian.tar.xz | tar -xJ --strip-components=1 -C /tmp/pacman-package-manager
+	sudo apt-get build-dep -y /tmp/pacman-package-manager/debian/control
+	cd /tmp/pacman-package-manager
+	./configure
+	make
+	sudo make install
+	cd
+	rm -rf /tmp/pacman-package-manager
+else
+	printf "%s%sPacman is already installed%s\n" "${BLD}" "${CGR}" "${CNC}"
+fi
+
 ########## ---------- Install packages ---------- ##########
 
 logo "Installing needed packages.."
 
-dependencias=(base-devel rustup bspwm polybar sxhkd \
+dependencias=(base-devel rustup pacman-contrib bspwm polybar sxhkd \
 			  alacritty brightnessctl dunst rofi lsd \
 			  jq polkit-gnome git playerctl mpd \
 			  ncmpcpp geany ranger mpc picom xdotool \
@@ -105,7 +123,7 @@ dependencias=(base-devel rustup bspwm polybar sxhkd \
 			  zsh zsh-autosuggestions zsh-history-substring-search zsh-syntax-highlighting xorg-xsetroot xorg-xwininfo xorg-xrandr)
 
 is_installed() {
-  brew list "$1" &> /dev/null
+  pacman -Qi "$1" &> /dev/null
   return $?
 }
 
@@ -113,7 +131,7 @@ printf "%s%sChecking for required packages...%s\n" "${BLD}" "${CBL}" "${CNC}"
 for paquete in "${dependencias[@]}"
 do
   if ! is_installed "$paquete"; then
-	brew install "$paquete" &> /dev/null
+    sudo pacman -S "$paquete" --noconfirm
     printf "\n"
   else
     printf '%s%s is already installed on your system!%s\n' "${CGR}" "$paquete" "${CNC}"
@@ -153,9 +171,9 @@ clear
 
 logo "Downloading dotfiles"
 [ -d ~/dotfiles ] && rm -rf ~/dotfiles
-printf "Cloning rice from https://github.com/gh0stzk/dotfiles\n"
+printf "Cloning rice from https://github.com/PunGrumpy/gh0stzk-dotfiles\n"
 cd
-git clone --depth=1 https://github.com/gh0stzk/dotfiles.git
+git clone --depth=1 https://github.com/PunGrumpy/gh0stzk-dotfiles.git dotfiles
 sleep 2
 clear
 
